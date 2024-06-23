@@ -10,7 +10,7 @@
 using namespace std;
 
 int addStr(string& s, int k, int inx = -1) {
-    if(inx = -1) inx = s.size() - 1;
+    if(inx == -1) inx = s.size() - 1;
     s[inx]++;
     for(int i = inx; i >= 0; --i) {
         if(s[i] - 'a' < k) return i;
