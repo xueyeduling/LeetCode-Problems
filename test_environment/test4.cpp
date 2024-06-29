@@ -7,17 +7,29 @@
 #include <queue>
 #include <stack>
 #include <numeric>
+#include <unordered_set>
 using namespace std;
 
-struct stu1 {
-    unsigned int arr[16];
-    stu1() {
-        cout << sizeof(arr) << endl;
+vector<int> nextGreaterElements(vector<int>& nums) {
+
+        vector<int> res(nums.size(), -1);
+        vector<int> stack = {0};
+        for(int i = 1; stack.back() != i; i = ++i % nums.size()) {
+            while(stack.size() > 0 && nums[stack.back()] < nums[i]) {
+                res[stack.back()] = nums[i];
+                stack.pop_back();
+            }
+            if(res[i] == -1) stack.push_back(i);
+        }
+
+        return res;
     }
-};
 
 int main()
 {
-    stu1 stu;
+    vector<int> nums = {1,1,1,1,1};
+
+    nextGreaterElements(nums);
+
     return 0;
 }

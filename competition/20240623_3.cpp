@@ -20,17 +20,16 @@ long long totalcost(vector<int>& nums, int index, bool b) {
 }
 
 long long maximumTotalCost(vector<int>& nums) {
-    long long res = nums[0];
-    for(int i = 1; i < nums.size(); ++i) {
-        if(nums[i] > 0) res += nums[i];
-        else if(nums[i - 1] < 0 && nums[i - 1] > nums[i]) {
-            res -= nums[i];
-            res -= nums[i - 1];
-        }
-        else res -= nums[i];
+    int n = nums.size();
+    const long long INF = 1e18;
+    long long f[n][2];
+    for (int i = 0; i < n; i++) f[i][0] = f[i][1] = -INF;
+    f[0][0] = nums[0];
+    for (int i = 1; i < n; i++) {
+        f[i][0] = max(f[i - 1][0], f[i - 1][1]) + nums[i];
+        f[i][1] = f[i - 1][0] - nums[i];
     }
-    
-    return res;
+    return max(f[n - 1][0], f[n - 1][1]);
 }
 
 int main() {
